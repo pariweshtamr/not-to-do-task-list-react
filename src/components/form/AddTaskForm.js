@@ -4,8 +4,8 @@ import { Form, Row, Col, Button } from 'react-bootstrap';
 
 
 const initialForm = {
-    task:"",
-    hr:0,
+    task:"Coding",
+    hr:10,
 };
 
 export const AddTaskForm = ({addTaskList}) => {
@@ -32,6 +32,7 @@ export const AddTaskForm = ({addTaskList}) => {
         <Form.Control 
         name="task" 
         onChange = {handleOnChange}
+        value ={frmData.task}
         maxLength = "30"
         required
         placeholder="Task" />
@@ -41,6 +42,7 @@ export const AddTaskForm = ({addTaskList}) => {
         name="hr" 
         type = "number"
         onChange = {handleOnChange}
+        value ={frmData.hr}
         required
         placeholder="Hours" />
       </Col>

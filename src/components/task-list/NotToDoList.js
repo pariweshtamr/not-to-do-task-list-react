@@ -1,9 +1,42 @@
 import React from 'react'
+import { Alert, Button, Table } from 'react-bootstrap';
 
-export const NotToDoList = () => {
+export const NotToDoList = ({badTasks, markAsToDo, badHours}) => {
     return (
         <div>
-            bad list
-        </div>
+        <h2>Not-to-do List</h2>
+        <Table striped bordered hover size="sm">
+<thead>
+<tr>
+  <th>Tasks</th>
+  <th>Hours</th>
+  <th>Action</th>
+</tr>
+</thead>
+<tbody>
+
+{
+  badTasks.map((itm, i)=>{
+    return (
+      <tr>
+      <td>
+        <input type="checkbox" /> <label>  {itm.task}</label>
+      </td>
+      <td>{itm.hr}</td>
+      <td>
+          <Button onClick ={() => markAsToDo(i)}>Mark To-do</Button>
+      </td>
+    </tr>
+
+    );
+  })
+}
+</tbody>
+</Table>
+
+<Alert variant ="danger">
+      You have saved: {badHours} / 168 Hours per week
+    </Alert>
+    </div>
     )
 }
