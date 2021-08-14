@@ -1,7 +1,7 @@
 import React from 'react'
 import { Alert, Button, Table } from 'react-bootstrap';
 
-export const NotToDoList = ({badTasks, markAsToDo, badHours}) => {
+export const NotToDoList = ({badTasks, markAsToDo, badHours, handleOnBadTaskClicked, badTaskToDelete}) => {
     return (
         <div>
         <h2>Not-to-do List</h2>
@@ -18,9 +18,9 @@ export const NotToDoList = ({badTasks, markAsToDo, badHours}) => {
 {
   badTasks.map((itm, i)=>{
     return (
-      <tr>
+      <tr key={i}>
       <td>
-        <input type="checkbox" /> <label>  {itm.task}</label>
+        <input type="checkbox" defaultValue = {i} checked = {badTaskToDelete.includes(i)} onChange={handleOnBadTaskClicked} /> <label>  {itm.task}</label>
       </td>
       <td>{itm.hr}</td>
       <td>
@@ -34,7 +34,7 @@ export const NotToDoList = ({badTasks, markAsToDo, badHours}) => {
 </tbody>
 </Table>
 
-<Alert variant ="danger">
+<Alert variant ="warning">
       You have saved: {badHours} / 168 Hours per week
     </Alert>
     </div>

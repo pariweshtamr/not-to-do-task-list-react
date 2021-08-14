@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Container, Row, Col, Alert } from "react-bootstrap";
+import { Container, Row, Col, Alert, Button } from "react-bootstrap";
 import { AddTaskForm } from './components/form/AddTaskForm';
 
 import { NotToDoList } from "./components/task-list/NotToDoList";
@@ -14,14 +14,15 @@ const App = () => {
   const [tasks, setTasks] = useState([]);
   const [badTasks, setBadTasks] = useState([]);
   const [error, setError] = useState(false);
+  const [taskToDelete, setTaskToDelete] = useState([]);
+  const [badTaskToDelete, setBadTaskToDelete] = useState([]);
 
   const taskHrs = tasks.reduce((subttl, itm) => subttl + +itm.hr, 0);
   const badHours = badTasks.reduce((subttl, itm) => subttl + +itm.hr, 0);
   const totalHrs = taskHrs + badHours;
 
-
 const addTaskList = frmData => {
-  if (totalHrs > hrPwk) {
+  if (totalHrs + +frmData.hr > hrPwk) {
     setError(true);
   }
   else {
@@ -61,6 +62,59 @@ const markAsToDo = (i) => {
   setBadTasks(tempBadList);
 };
 
+// collect indices of the task list that is to be deleted
+
+const handleOnTaskClicked = e => {
+  const {checked, value} = e.target;
+
+  if(checked) {
+    setTaskToDelete([...taskToDelete, +value])
+  }
+  else {
+
+  const filteredArg = taskToDelete.filter((item) => item !== +value)
+
+   setTaskToDelete(filteredArg);
+  }
+};
+
+// collect indices of the bad task list that is to be deleted
+
+const handleOnBadTaskClicked = e => {
+  const {checked, value} = e.target;
+
+  if(checked) {
+    setBadTaskToDelete([...badTaskToDelete, +value])
+  }
+  else {
+
+  const filteredArg = badTaskToDelete.filter((item) => item !== +value)
+
+   setBadTaskToDelete(filteredArg);
+  }
+};
+
+//delete items from task list only
+const deleteFromTaskList = () => {
+  const newArg = tasks.filter((itm, i) => !taskToDelete.includes(i));
+  setTaskToDelete([]);
+  setTasks(newArg);
+};
+
+//delete items from bad list only
+const deleteFromBadTaskList = () => {
+  const newArg = badTasks.filter((itm, i) => !badTaskToDelete.includes(i));
+  setBadTaskToDelete([]);
+  setBadTasks(newArg);
+};
+
+//delete list from task list and bad list
+const handleOnDeleteItems = () => {
+  deleteFromTaskList();
+  deleteFromBadTaskList();
+};
+
+
   return (
   <div className="main">
     <Container>
@@ -81,13 +135,22 @@ const markAsToDo = (i) => {
   <AddTaskForm addTaskList={addTaskList}/>
   <hr />
   <Row>
-    <Col><TaskList tasks={tasks} markAsBadList={markAsBadList}/></Col>
-    <Col><NotToDoList badTasks={badTasks} markAsToDo={markAsToDo} badHours={badHours}/></Col>
+    <Col><TaskList tasks={tasks} markAsBadList={markAsBadList} handleOnTaskClicked={handleOnTaskClicked} taskToDelete={taskToDelete}/></Col>
+
+    <Col><NotToDoList badTasks={badTasks} markAsToDo={markAsToDo} badHours={badHours}
+    handleOnBadTaskClicked={handleOnBadTaskClicked} badTaskToDelete={badTaskToDelete}/></Col>
   </Row>
+
+  <Row className= "py-3">
+    <Col>
+    <Button variant="danger" onClick={handleOnDeleteItems}>DELETE</Button>
+    </Col>
+  </Row>
+  <hr />
 
   <Row>
     <Col>
-    <Alert variant ="warning">
+    <Alert variant ="info">
       Your Total Allocated Hours: {totalHrs} / 168 Hours per week
     </Alert>
     </Col>

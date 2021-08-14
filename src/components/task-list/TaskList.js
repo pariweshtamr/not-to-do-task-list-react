@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Table } from 'react-bootstrap'
 
-export const TaskList = ({tasks, markAsBadList}) => {
+export const TaskList = ({tasks, markAsBadList, handleOnTaskClicked, taskToDelete}) => {
     return (
         <div>
             <h2>Task List</h2>
@@ -18,9 +18,11 @@ export const TaskList = ({tasks, markAsBadList}) => {
     {
       tasks.map((itm, i)=>{
         return (
-          <tr>
+          <tr key= {i}>
           <td>
-            <input type="checkbox" /> <label>  {itm.task}</label>
+            <input type="checkbox" defaultValue = {i} checked = {taskToDelete.includes(i)} onChange={handleOnTaskClicked}/>
+            {" "}
+            <label>  {itm.task}</label>
           </td>
           <td>{itm.hr}</td>
           <td>
