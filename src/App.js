@@ -141,7 +141,7 @@ const handleOnDeleteItems = () => {
     handleOnBadTaskClicked={handleOnBadTaskClicked} badTaskToDelete={badTaskToDelete}/></Col>
   </Row>
 
-  <Row className= "py-3">
+  <Row>
     <Col>
     <Button variant="danger" onClick={handleOnDeleteItems}>DELETE</Button>
     </Col>
