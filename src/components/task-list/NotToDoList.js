@@ -1,7 +1,9 @@
 import React from 'react'
 import { Alert, Button, Table } from 'react-bootstrap';
 
-export const NotToDoList = ({badTasks, markAsToDo, badHours, handleOnBadTaskClicked, badTaskToDelete}) => {
+export const NotToDoList = ({badTasks, markAsToDo, handleOnBadTaskClicked, badTaskToDelete}) => {
+
+  const badHours = badTasks.reduce((subTtl, item) => subTtl + item.hr, 0)
     return (
         <div>
         <h2>Not-to-do List</h2>
@@ -20,7 +22,7 @@ export const NotToDoList = ({badTasks, markAsToDo, badHours, handleOnBadTaskClic
     return (
       <tr key={i}>
       <td>
-        <input type="checkbox" defaultValue = {i} checked = {badTaskToDelete.includes(i)} onChange={handleOnBadTaskClicked} /> <label>  {itm.task}</label>
+        <input type="checkbox" defaultValue = {itm._id} checked = {badTaskToDelete.includes(itm._id)} onChange={handleOnBadTaskClicked} /> <label>  {itm.task}</label>
       </td>
       <td>{itm.hr}</td>
       <td>

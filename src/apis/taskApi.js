@@ -40,7 +40,17 @@ export const switchTask = (taskInfo) => {
         }
     })
 }
-// switch task between not to do to to do (Update data) (PATCH)
-
+//delete tasks from db
+export const deleteTasks = (ids) => {
+    return new Promise(async resolve => {
+        try {
+           const { data } = await axios.delete(taskApi, { data: ids })
+           resolve(data)
+        } catch (error) {
+            console.log(error)
+            resolve(false)          
+        }
+    })
+}
 
 

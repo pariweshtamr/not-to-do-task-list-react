@@ -20,13 +20,13 @@ export const TaskList = ({tasks, markAsBadList, handleOnTaskClicked, taskToDelet
         return (
           <tr key= {i}>
           <td>
-            <input type="checkbox" defaultValue = {i} checked = {taskToDelete.includes(i)} onChange={handleOnTaskClicked}/>
+            <input type="checkbox" defaultValue = {itm._id} checked = {taskToDelete.includes(itm._id)} onChange={handleOnTaskClicked}/>
             {" "}
             <label>  {itm.task}</label>
           </td>
           <td>{itm.hr}</td>
           <td>
-              <Button onClick ={() => markAsBadList(itm._id)}>Mark as Bad</Button>
+              <Button onClick ={() => markAsBadList(itm._id)}>Mark Not-to-do</Button>
           </td>
         </tr>
     
