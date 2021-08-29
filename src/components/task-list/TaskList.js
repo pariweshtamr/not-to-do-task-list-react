@@ -26,7 +26,7 @@ export const TaskList = ({tasks, markAsBadList, handleOnTaskClicked, taskToDelet
           </td>
           <td>{itm.hr}</td>
           <td>
-              <Button onClick ={() => markAsBadList(i)}>Mark as Bad</Button>
+              <Button onClick ={() => markAsBadList(itm._id)}>Mark as Bad</Button>
           </td>
         </tr>
     
