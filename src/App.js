@@ -49,22 +49,35 @@ const addTaskList = async frmData => {
   //   setTasks([...tasks,frmData]);
   // }
 };
-
-const markAsBadList = async _id => {
+const markAsBadList = async (_id) => {
   const ntd = {
     id: _id,
     todo: false,
   }
-  const result = await switchTask(ntd)
-  console.log(result)
+  const res = await switchTask(ntd)
+  console.log(res)
+  if(res.result._id){
+    const { result } = await getTaskLists();
+    console.log(result)
+    setTasks(result)
+
+  }
+}; 
+const markAsToDo = async (_id) => {
+  const td = {
+    id: _id,
+    todo: true,
+  }
+  const res = await switchTask(td)
+  console.log(res)
+  if(res.result._id){
+    const { result } = await getTaskLists();
+    console.log(result)
+    setTasks(result)
+
+  }
 }; 
 
-const markAsToDo = (i) => {
-  const tempBadList = [...badTasks]
-  const goodTask = tempBadList.splice(i, 1)[0];
-  setTasks([...tasks, goodTask]);
-  setBadTasks(tempBadList);
-};
 // collect indices of the task list that is to be deleted
 const handleOnTaskClicked = e => {
   const {checked, value} = e.target;
@@ -104,6 +117,12 @@ const handleOnDeleteItems = () => {
   deleteFromTaskList();
   deleteFromBadTaskList();
 };
+
+//task list only
+const taskListsOnly = tasks.filter((item) => item.todo)
+//badTask list only
+const badTaskListsOnly = tasks.filter((item) => !item.todo)
+
   return (
   <div className="main">
     <Container>
@@ -126,9 +145,15 @@ const handleOnDeleteItems = () => {
   <Row>
     <Col>
     {!tasks.length && !badTasks.length && (<Spinner animation="border" variant="primary" />)}
-    <TaskList tasks={tasks} markAsBadList={markAsBadList} handleOnTaskClicked={handleOnTaskClicked} taskToDelete={taskToDelete}/></Col>
+    <TaskList 
+    // tasks={tasks} 
+    tasks={taskListsOnly} 
+    markAsBadList={markAsBadList} handleOnTaskClicked={handleOnTaskClicked} taskToDelete={taskToDelete}/></Col>
 
-    <Col><NotToDoList badTasks={badTasks} markAsToDo={markAsToDo} badHours={badHours}
+    <Col><NotToDoList 
+    // badTasks={badTasks}
+    badTasks={badTaskListsOnly}
+    markAsToDo={markAsToDo} badHours={badHours}
     handleOnBadTaskClicked={handleOnBadTaskClicked} badTaskToDelete={badTaskToDelete}/></Col>
   </Row>
   <Row>

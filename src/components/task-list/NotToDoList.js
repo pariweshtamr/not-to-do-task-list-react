@@ -24,7 +24,7 @@ export const NotToDoList = ({badTasks, markAsToDo, badHours, handleOnBadTaskClic
       </td>
       <td>{itm.hr}</td>
       <td>
-          <Button onClick ={() => markAsToDo(i)}>Mark To-do</Button>
+          <Button onClick ={() => markAsToDo(itm._id)}>Mark To-do</Button>
       </td>
     </tr>
 
